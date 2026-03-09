@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+*.log
+*.class
+*.jar
+*.war
+*.ear
