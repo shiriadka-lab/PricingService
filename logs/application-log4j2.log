@@ -1,0 +1,29 @@
+2026-01-20 11:13:12 [main] INFO  : Starting PricingApplication using Java 21.0.8 with PID 17796 (C:\Learning\Pricing\target\classes started by shiriadka in C:\Learning\Pricing)
+2026-01-20 11:13:12 [main] INFO  : No active profile set, falling back to 1 default profile: "default"
+2026-01-20 11:13:14 [main] INFO  : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-20 11:13:14 [main] INFO  : Finished Spring Data repository scanning in 93 ms. Found 1 JPA repository interface.
+2026-01-20 11:13:15 [main] INFO  : Tomcat initialized with port 8082 (http)
+2026-01-20 11:13:15 [main] INFO  : Initializing ProtocolHandler ["http-nio-0.0.0.0-8082"]
+2026-01-20 11:13:15 [main] INFO  : Starting service [Tomcat]
+2026-01-20 11:13:15 [main] INFO  : Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-01-20 11:13:15 [main] INFO  : Root WebApplicationContext: initialization completed in 3495 ms
+2026-01-20 11:13:16 [main] INFO  : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-01-20 11:13:16 [main] INFO  : HHH000001: Hibernate ORM core version 7.2.0.Final
+2026-01-20 11:13:17 [main] INFO  : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-20 11:13:17 [main] INFO  : HikariPool-1 - Starting...
+2026-01-20 11:13:17 [main] INFO  : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@6cd6698b
+2026-01-20 11:13:17 [main] INFO  : HikariPool-1 - Start completed.
+2026-01-20 11:13:17 [main] WARN  : HHH000511: The 9.5.2 version for [org.hibernate.dialect.PostgreSQLDialect] is no longer supported, hence certain features may not work properly.The minimum supported version is 13.0.0. Check the community dialects project for available legacy versions.
+2026-01-20 11:13:17 [main] WARN  : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-20 11:13:17 [main] INFO  : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5432/pricing]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 9.5.2
+	Default catalog/schema: pricing/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
