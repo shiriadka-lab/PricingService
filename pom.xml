@@ -134,12 +134,14 @@
         </dependency>
         
         <!-- 1. Eureka Client — registers this service with the registry -->
+        <!-- Replace with Consul Discovery Client if using Consul instead of Eureka -->
+        <!--
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-        </dependency>
+        </dependency> -->
         
-        <!-- 2. Spring Cloud LoadBalancer — required for Feign + Eureka discovery -->
+        <!-- 2. Spring Cloud LoadBalancer — required for Feign + Eureka + Consul discovery -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
@@ -149,6 +151,11 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
          </dependency>
+         
+          <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-consul-discovery</artifactId>
+        </dependency>
          
          <dependency>
                 <groupId>org.springframework.boot</groupId>

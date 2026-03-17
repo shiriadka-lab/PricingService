@@ -12,22 +12,56 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
     consumer:
-      group-id: pricing-service
-      auto.offset.reset: earliest
+      # group-id: pricing-service # group is already defined in code with @KafkaListener(groupId = "pricing-service") for better visibility and to avoid conflicts with other consumers
+      #auto.offset.reset: latest # start from latest messages if no offset found
+      auto.offset.reset: earliest  # start from earliest messages if no offset found
+      enable-auto-commit: false  # disable auto-commit to manage offsets manually for better control
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: com.BookService.Pricing.events
         spring.json.value.default.type: com.BookService.Pricing.events.BookCreatedEvent
         spring.json.use.type.headers: false
+        max.poll.records: 10  # tune based on your processing speed
+        max.poll.interval.ms: 300000  # 5 minutes default, reduce if processing is fast
+        spring.json.add.type.headers: false
+    listener:
+      ack-mode: RECORD  # commit after each record processed. pairs well with enable-auto-commit: false for precise control over offsets.
 
-eureka:
-  instance:
-    prefer-ip-address: true
-    lease-renewal-interval-in-seconds: 10
-    lease-expiration-duration-in-seconds: 30
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://eureka-server:8761/eureka/
+  cloud:
+    consul:
+      host: consul          # matches Docker Compose service name
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name}
+        instance-id: ${spring.application.name}:${random.value}
+        health-check-path: /actuator/health
+        health-check-interval: 10s
+        prefer-ip-address: true
+        register: true
+        enabled: true
+      config:
+        enabled: false      # not using Consul as config server
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # PricingService fetches Auth Server public key from here
+          # to verify service tokens sent by BookService
+          jwk-set-uri: http://auth-server:7001/oauth2/jwks
+          
+          
+# NOTE: There is no auth block here like book service. The auth block is only needed by services that make authenticated calls to other services. PricingService only receives calls — so JWKS URI is all it needs.
+# If you ever add a third service that PricingService needs to call, that's when you'd add the auth block to PricingService too.
+
+#eureka:
+##  instance:
+ #   prefer-ip-address: true
+ #   lease-renewal-interval-in-seconds: 10
+ #   lease-expiration-duration-in-seconds: 30
+#  client:
+#    register-with-eureka: true
+#    fetch-registry: true
+#    service-url:
+#      defaultZone: http://eureka-server:8761/eureka/

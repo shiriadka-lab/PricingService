@@ -1,0 +1,10 @@
+FROM eclipse-temurin:21-jre
+WORKDIR /app/pricing-service
+
+COPY pricing-service-0.0.1-SNAPSHOT.jar pricing_app.jar
+
+
+
+EXPOSE 8082
+ENTRYPOINT ["java", "-jar", "pricing_app.jar"]
+
