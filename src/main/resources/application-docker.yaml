@@ -7,6 +7,11 @@ spring:
     bootstrap-servers: kafka:9092
     admin:
       fail-fast: false
+    template:
+      observation-enabled: true    # enables tracing on KafkaTemplate (producer)
+    listener:
+      ack-mode: RECORD  # commit after each record processed. pairs well with enable-auto-commit: false for precise control over offsets.
+      observation-enabled: true    # enables tracing on @KafkaListener (consumer)
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
@@ -25,8 +30,7 @@ spring:
         max.poll.records: 10  # tune based on your processing speed
         max.poll.interval.ms: 300000  # 5 minutes default, reduce if processing is fast
         spring.json.add.type.headers: false
-    listener:
-      ack-mode: RECORD  # commit after each record processed. pairs well with enable-auto-commit: false for precise control over offsets.
+      
 
   cloud:
     consul:
@@ -55,6 +59,18 @@ spring:
 # NOTE: There is no auth block here like book service. The auth block is only needed by services that make authenticated calls to other services. PricingService only receives calls — so JWKS URI is all it needs.
 # If you ever add a third service that PricingService needs to call, that's when you'd add the auth block to PricingService too.
 
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: http://tempo:9411/api/v2/spans  # Zipkin server URL
+ 
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
 #eureka:
 ##  instance:
  #   prefer-ip-address: true

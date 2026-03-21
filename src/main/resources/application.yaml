@@ -62,4 +62,7 @@ management:
       enabled: true
     health:
       show-details: always
+  metrics:          #for prometheus to show the application name 
+    tags:
+      application: ${spring.application.name}
 
